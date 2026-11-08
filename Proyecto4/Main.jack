@@ -1,0 +1,19 @@
+
+/**
+ * Archivo: Main.jack
+ * Descripcion: Clase principal, inicaliza y ejecuta la instancia principal del controlador del juego y al final liberar memoria
+ * Autor: Ana Isabella Gómez García
+ */
+
+class Main {
+
+    function void main() {
+        var Pantalla pantalla;
+
+        let pantalla = Pantalla.new();
+        do pantalla.ejecutar();
+        do pantalla.dispose();
+
+        return;
+    }
+}
