@@ -1,0 +1,619 @@
+/**Archivo: Pantalla.jack
+Descripción: Se encarga de manejar la interfaz del juego de carreras.
+Responsabilidades: Mostrar los elementos y dibujar los elementos del juego (camiones,monedas,carriles,carro,etc)
+Autor: Ana Isabella Gómez García
+**/
+
+class Pantalla{
+    field boolean salir;
+    field boolean pausado;
+    field int distancia;
+    field boolean reiniciar;
+    field Array spriteCarro;
+    field Array spriteCono;
+    field Array spriteMoto;
+    field Array spriteMoneda;
+    field Array spriteCamionIzq;
+    field Array spriteCamionCentro;
+    field Array spriteCamionDer;
+
+/*
+Inicializa la pantalla y todos sus atributos, establece sus valores y crea los sprites para dibujar los elementos
+*/
+ 
+   constructor Pantalla new (){
+        let salir=false;
+        let pausado=false;
+        let distancia=50;
+        let reiniciar=false;
+
+        let spriteCarro = crearSpriteCarro();
+        let spriteCono = crearSpriteCono();
+        let spriteCamionIzq = crearSpriteCamionIzq();
+        let spriteCamionCentro = crearSpriteCamionCentro();
+        let spriteCamionDer = crearSpriteCamionDer();
+        let spriteMoto = crearSpriteMoto();
+        let spriteMoneda = crearSpriteMoneda();
+        
+        return this;
+    }
+
+/*
+Muestra el menú inicialy permite iniciar nuevas partidas hasta que el usuario decida salir
+*/
+    method void ejecutar(){
+        while (~salir){
+            let distancia=menuInicial();
+            if (~salir){
+                do jugar(distancia);
+            }
+        }
+        return;
+    }
+
+/*
+Crea el arreglo que representa el sprite del carro jugador y retorna el arreglo con los dibujos.
+*/
+    method Array crearSpriteCarro() {
+        var Array s;
+        let s = Array.new(16);
+
+        let s[0] = 0;
+        let s[1] = 768;
+        let s[2] = 1920;
+        let s[3] = 4032;
+        let s[4] = 8184;
+        let s[5] = 16368;
+        let s[6] = 16368;
+        let s[7] = 16368;
+        let s[8] = 16368;
+        let s[9] = 16368;
+        let s[10] = 8184;
+        let s[11] = 4032;
+        let s[12] = 1920;
+        let s[13] = 768;
+        let s[14] = 0;
+        let s[15] = 0;
+
+        return s;
+    }
+
+/*
+Crea el arreglo que representa el sprite del cono con un arreglo de 16 valores y retorna los datos de dibujo
+*/
+    method Array crearSpriteCono() {
+        var Array s;
+        let s = Array.new(16);
+
+        let s[0] = 0;
+        let s[1] = 256;
+        let s[2] = 768;
+        let s[3] = 1792;
+        let s[4] = 3840;
+        let s[5] = 3840;
+        let s[6] = 7680;
+        let s[7] = 7680;
+        let s[8] = 15360;
+        let s[9] = 15360;
+        let s[10] = 15360;
+        let s[11] = 15360;
+        let s[12] = 15360;
+        let s[13] = 15360;
+        let s[14] = 0;
+        let s[15] = 0;
+
+        return s;
+    }
+
+/*
+Construye la parte izquierda del camión 
+*/
+    method Array crearSpriteCamionIzq() {
+        var Array s;
+        let s = Array.new(16);
+
+        let s[0] = 0;
+        let s[1] = 7680;
+        let s[2] = 16380;
+        let s[3] = 32760;
+        let s[4] = 32767;
+        let s[5] = 32767;
+        let s[6] = 32767;
+        let s[7] = 32767;
+        let s[8] = 32767;
+        let s[9] = 32767;
+        let s[10] = 32767;
+        let s[11] = 32767;
+        let s[12] = 32760;
+        let s[13] = 16380;
+        let s[14] = 7680;
+        let s[15] = 0;
+
+        return s;
+    }
+/*
+Constuye la parte central del camión
+*/
+    method Array crearSpriteCamionCentro() {
+        var Array s;
+        let s = Array.new(16);
+
+        let s[0] = 0;
+        let s[1] = 32760;
+        let s[2] = 32767;
+        let s[3] = 32767;
+        let s[4] = 32767;
+        let s[5] = 32767;
+        let s[6] = 32767;
+        let s[7] = 32767;
+        let s[8] = 32767;
+        let s[9] = 32767;
+        let s[10] = 32767;
+        let s[11] = 32767;
+        let s[12] = 32767;
+        let s[13] = 32767;
+        let s[14] = 32760;
+        let s[15] = 0;
+
+        return s;
+    }
+/*
+Construye la parte derecha del caamión
+*/
+    method Array crearSpriteCamionDer() {
+        var Array s;
+        let s = Array.new(16);
+
+        let s[0] = 0;
+        let s[1] = 7680;
+        let s[2] = 16380;
+        let s[3] = 32760;
+        let s[4] = 32767;
+        let s[5] = 32767;
+        let s[6] = 32767;
+        let s[7] = 32767;
+        let s[8] = 32767;
+        let s[9] = 32767;
+        let s[10] = 32767;
+        let s[11] = 32767;
+        let s[12] = 32760;
+        let s[13] = 16380;
+        let s[14] = 7680;
+        let s[15] = 0;
+
+        return s;
+    }
+/*
+Crea el sprite de la moto, utilizando un arreglo de 16 valores para crear la gráfica del elemento.
+*/
+    method Array crearSpriteMoto() {
+        var Array s;
+        let s = Array.new(16);
+
+        let s[0] = 0;
+        let s[1] = 0;
+        let s[2] = 768;
+        let s[3] = 1920;
+        let s[4] = 4032;
+        let s[5] = 8160;
+        let s[6] = 16368;
+        let s[7] = 8184;
+        let s[8] = 4080;
+        let s[9] = 2016;
+        let s[10] = 960;
+        let s[11] = 480;
+        let s[12] = 192;
+        let s[13] = 0;
+        let s[14] = 0;
+        let s[15] = 0;
+
+        return s;
+    }
+/*
+Crea el sprite de la moneda y retorna el arreglo de su representación gráfica.
+*/
+    method Array crearSpriteMoneda() {
+        var Array s;
+        let s = Array.new(16);
+
+        let s[0] = 0;
+        let s[1] = 768;
+        let s[2] = 1920;
+        let s[3] = 4032;
+        let s[4] = 8184;
+        let s[5] = 16368;
+        let s[6] = 16368;
+        let s[7] = 16368;
+        let s[8] = 16368;
+        let s[9] = 16368;
+        let s[10] = 16368;
+        let s[11] = 8184;
+        let s[12] = 4032;
+        let s[13] = 1920;
+        let s[14] = 768;
+        let s[15] = 0;
+
+        return s;
+    }
+/*
+Este método es el encargado de mostrar la información del menú principal, permite seleccionar entre 3 distancias o salir.También retorna la distancia seleccionada
+*/
+    method int menuInicial(){
+        var int tecla;
+        var boolean elegido;
+
+        let elegido=false;
+        let distancia=50;
+
+        do Screen.clearScreen();
+        do Output.moveCursor(2,20);
+        do Output.printString("Carreras Jack");
+        do Output.moveCursor(6,15);
+        do Output.printString("Selecciona la distancia");
+        do Output.moveCursor(9,20);
+        do Output.printString("1-50 pasos");
+        do Output.moveCursor(11, 20);
+        do Output.printString("2-100 pasos");
+        do Output.moveCursor(13,20);
+        do Output.printString("3-150 pasos");
+        do Output.moveCursor(17,15);
+        do Output.printString("Presiona 1,2 o 3 para iniciar");
+        do Output.moveCursor(19,20);
+        do Output.printString("ESC-Salir");
+
+        while (~elegido){
+            let tecla = Keyboard.keyPressed();
+
+            if (tecla=49){
+                let distancia=50;
+                let elegido=true;
+            }
+            if (tecla=50){
+                let distancia=100;
+                let elegido=true;
+            }
+            if (tecla=51){
+                let distancia=150;
+                let elegido=true;
+            }
+            if (tecla=140){
+                let salir=true;
+                let elegido=true;
+            }
+            do Sys.wait(30);
+        }
+        return distancia;
+    }
+/*
+Ejecuta el ciclo principal de una partida: lee las entrads del teclado, dibuja la pantalla, controla la pausa, el reinicio y la finalización del juego. Al terminar, libera los recursos.
+*/
+    method void jugar(int pasosMeta){
+        var Carrera carrera;
+        var int tecla;
+        var int anterior;
+        var int direccion;
+        var boolean continuar;
+
+        let reiniciar = false;
+        let pausado = false;
+        let carrera = Carrera.new(pasosMeta, 12345);
+        let continuar = true;
+        let anterior = 0;
+
+        while (continuar) {
+            let tecla = Keyboard.keyPressed();
+            let direccion = 0;
+
+            if (tecla = 0) {
+                let anterior = 0;
+            }
+
+            if ((tecla > 0) & (anterior = 0)) {
+                let direccion = procesarTecla(tecla);
+                do procesarAccion(carrera, direccion);
+            }
+            if (reiniciar | salir) {
+                let continuar = false;
+            }
+
+            let anterior = tecla;
+
+           if ((~pausado) & continuar) {
+                do carrera.generar();
+                do carrera.avanzar();
+                do dibujarJuego(carrera);
+                do revisarEstado(carrera);
+
+                if ((carrera.estado() = 1) |
+                    (carrera.estado() = 2)) {
+                    let continuar = false;
+                }
+            } else {
+                if (pausado) {
+                    do dibujarPausa();
+                }
+            }
+
+            do Sys.wait(100);
+        }
+
+        do carrera.dispose();
+        return;
+    }
+/*
+Procesa la información de una tecla; es el métoodo que permite mover el carro, pausar o reiniciar la partida, o salir.
+*/
+    method void procesarAccion(Carrera carrera, int direccion) {
+        if ((direccion = -1) | (direccion = 1)) {
+            do carrera.moverCarro(direccion);
+        }
+
+        if (direccion = 8) {
+            let pausado = ~pausado;
+        }
+
+        if (direccion = 7) {
+            let reiniciar = true;
+        }
+
+        if (direccion = 9) {
+            let salir = true;
+        }
+
+        return;
+    }
+    /*
+    Interpreta los códigos que recibe el teclado, convierte las teclas de movimiento y control en valores y retorna cero cuando nos acción es desconocida.
+    */
+    method int procesarTecla(int tecla) {
+        if (tecla = 131) {
+            return -1;
+        }
+
+        if (tecla = 133) {
+            return 1;
+        }
+
+        if (tecla = 80) {
+            return 8;
+        }
+
+        if (tecla = 82) {
+            return 7;
+        }
+
+        if (tecla = 140) {
+            return 9;
+        }
+
+        return 0;
+    }
+    /*
+    Consulta el estado de una partida y dependiendo de si el usuario ganó o perdió, muestra la pantalla correspondiente
+    */
+    method void revisarEstado(Carrera carrera) {
+        if (carrera.estado() = 1) {
+            do resultado(carrera.puntaje(), false);
+        }
+
+        if (carrera.estado() = 2) {
+            do resultado(carrera.puntaje(), true);
+        }
+
+        return;
+    }
+/*
+Este método es el encargado de recorrer los tres carriles, identificar el tipo de obstáculo y dirigirlo al sprite correspondiente. En el caso del camión, determina que parte de este, debe dibujar.
+*/
+    method void dibujarObstaculos(Carrera carrera) {
+        var int carril;
+        var int col;
+        var int tipo;
+        var int fila;
+        var int anterior;
+        var int siguiente;
+        var Array sprite;
+
+        let carril = 0;
+
+        while (carril < 3) {
+            let fila = 5 + (carril * 2);
+            let col = 0;
+
+            while (col < 32) {
+                let tipo = carrera.ocupada(carril, col);
+                let sprite = spriteCono;
+
+                if (tipo = 0) {
+                    let sprite = spriteCono;
+                }
+
+                if (tipo = 1) {
+                    let anterior = carrera.ocupada(carril, col - 1);
+                    let siguiente = carrera.ocupada(carril, col + 1);
+
+                    if ((col = 0) | (anterior = -1)) {
+                        let sprite = spriteCamionIzq;
+                    } else {
+                        if (siguiente = -1) {
+                            let sprite = spriteCamionDer;
+                        } else {
+                            let sprite = spriteCamionCentro;
+                        }
+                    }
+                }
+
+                if (tipo = 2) {
+                    let sprite = spriteMoto;
+                }
+
+                if (tipo = 3) {
+                    let sprite = spriteMoneda;
+                }
+
+                if (tipo > -1) {
+                    do Grafico.dibujarCelda(fila, col, sprite);
+                }
+
+                let col = col + 1;
+            }
+
+            let carril = carril + 1;
+        }
+
+        return;
+    }
+ /*
+ Calcula la fila del carril actual y dibuja el carro en la columna 2.
+ */   
+    method void dibujarCarro(Carrera carrera) {
+        var int fila;
+
+        let fila = 5 + (carrera.carrilCarro() * 2);
+
+        do Grafico.dibujarCelda(fila, 2, spriteCarro);
+
+        return;
+    }
+/*
+Dibuja la barra del avance que lleva el jugador, calculando el ancho de la barra según el proceso que se lleve y la distanicia total de la partida.
+*/
+    method void dibujarProgreso(Carrera carrera) {
+        var int ancho;
+
+        do Screen.setColor(true);
+        do Screen.drawRectangle(16, 32, 495, 43);
+
+        do Screen.setColor(false);
+        do Screen.drawRectangle(18, 34, 493, 41);
+
+        let ancho = (carrera.progreso() * 476) / distancia;
+
+        if (ancho > 0) {
+            do Screen.setColor(true);
+            do Screen.drawRectangle(18, 34, 18 + ancho, 41);
+        }
+
+        do Screen.setColor(false);
+
+        return;
+    }
+/*
+Limpia la pantalla y muestra el mensaje de pausa e indica las teclas disponibles, para salir, reiniciar o continuar.
+*/
+    method void dibujarPausa() {
+        do Screen.clearScreen();
+
+        do Output.moveCursor(8, 23);
+        do Output.printString("JUEGO PAUSADO");
+
+        do Output.moveCursor(11, 15);
+        do Output.printString("Presiona P para continuar");
+
+        do Output.moveCursor(14, 20);
+        do Output.printString("Presiona R para reiniciar");
+
+        do Output.moveCursor(16, 20);
+        do Output.printString("Presiona ESC para salir");
+
+        return;
+    }
+    /*
+    Este método se encarga de dibujar los elementos visuales de las partidas, como las vidas, los puntos, el progreso, la carretera, el carro, Presenta tambien las instrucciones de control.
+    */
+    method void dibujarJuego(Carrera carrera) {
+        do Screen.clearScreen();
+
+        do Output.moveCursor(0, 2);
+        do Output.printString("VIDAS: ");
+        do Output.printInt(carrera.vidas());
+
+        do Output.moveCursor(0, 23);
+        do Output.printString("PUNTOS: ");
+        do Output.printInt(carrera.puntaje());
+
+        do Output.moveCursor(2, 2);
+        do Output.printString("PROGRESO: ");
+        do Output.printInt(carrera.progreso());
+
+        do dibujarProgreso(carrera);
+
+        do Screen.setColor(true);
+        do Screen.drawRectangle(16, 64, 495, 79);
+        do Screen.drawRectangle(16, 160, 495, 175);
+        do Screen.drawRectangle(16, 111, 495, 112);
+        do Screen.drawRectangle(16, 143, 495, 144);
+
+        do dibujarObstaculos(carrera);
+        do dibujarCarro(carrera);
+
+        do Screen.setColor(false);
+
+        do Output.moveCursor(20, 2);
+        do Output.printString("Flechas: mover  P: Pausa");
+        do Output.moveCursor(21, 2);
+        do Output.printString("R: Reiniciar  ESC: Salir");
+
+        return;
+    }
+/*
+Muestra el resultado de la partida, indicando si el jugador ganó o perdió, sus puntos y permite salir o reiniciar el juego.
+*/
+      method void resultado(int puntos, boolean victoria) {
+        var int tecla;
+
+        do Screen.clearScreen();
+
+        if (victoria) {
+            do Output.moveCursor(7, 20);
+            do Output.printString("Has ganado!");
+        } else {
+            do Output.moveCursor(7, 20);
+            do Output.printString("Has perdido!");
+        }
+
+        do Output.moveCursor(9, 20);
+        do Output.printString("Puntos: ");
+        do Output.printInt(puntos);
+
+        do Output.moveCursor(14, 12);
+        do Output.printString("R - Menu principal");
+        do Output.moveCursor(16, 12);
+        do Output.printString("ESC - Salir");
+
+        let tecla = Keyboard.keyPressed();
+
+        while (tecla > 0) {
+            let tecla = Keyboard.keyPressed();
+            do Sys.wait(30);
+        }
+
+        let tecla = 0;
+
+        while ((tecla = 0) |
+            (~(tecla = 82) & ~(tecla = 140))) {
+            let tecla = Keyboard.keyPressed();
+            do Sys.wait(30);
+        }
+
+        if (tecla = 140) {
+            let salir = true;
+        }
+
+        return;
+    }
+/*
+Libera la memoria reservada para los sprites y evita mantener arreglos innecesarios cuando la interfaz finaliza su ejecución.
+*/
+    method void dispose() {
+        do Memory.deAlloc(spriteCarro);
+        do Memory.deAlloc(spriteCono);
+        do Memory.deAlloc(spriteCamionIzq);
+        do Memory.deAlloc(spriteCamionCentro);
+        do Memory.deAlloc(spriteCamionDer);
+        do Memory.deAlloc(spriteMoto);
+        do Memory.deAlloc(spriteMoneda);
+
+        return;
+    }
+}
