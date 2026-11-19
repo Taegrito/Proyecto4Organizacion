@@ -70,10 +70,37 @@ Sus principales responsabilidades son:
 ## TipoObstaculo.jack
 Es el encargado de describir los tipos de obstaculos, los cuales serán posteriormente referenciados por `Obstaculo.jack`.
 
-## Obstaculo.jack
-Es el encargado de 
+Los tipos definidos son:
 
+| Tipo | Obstáculo | Longitud| Velocidad| Efecto|
+|---|---|---|---|---|
+| 0 | Cono | 1 celda | 1 | Resta una vida. |
+| 1 | Camión | 3 celdas | 1 | Resta una vida. |
+| 2 | Moto | 1 celda | 2 | Resta una vida. |
+| 3 | Moneda | 1 celda | 1| Suma 10 puntos.
+
+## Obstaculo.jack
+Es el encargado de representar cada óbstaculo individual que aparece en una partida. Almacena su tipo, carril, columna actual y columna anterior.
+
+Sus responsabilidades son:
+* Mantener la posición del óbstaculo.
+* Actualizar la posición según l avelocidad de su tipo.
+* Determinar si entra en contacto con la posición del carro.
+* Comprobar si ocupa una columna determinada.
+* Determinar si salió de la pantalla.
+*  Consultar las características de su tipo de óbstaculo.
 ## Carrera.jack
+Es la lógica principal del juego, aquí se administra el funcionamiento interno de cada partida, sin encargarse de dibujar los elementos ni de leer directamente del teclado.
+Sus responsabilidades son:
+* Incializar una carrera con una distancia determinada.
+* Leer las entradas del teclado y procesar los controles.
+* Controlar la pausa, el reinicio y la salida.
+* Crear los sprites del carro, cono, cmaión, motocicleta y moneda.
+* Dibujar la carretera, el puntaje y los obstáculos.
+* Mostrar las vidas, el puntaje y el progreso.
+* Presentar los resultados de cada partida.
+* Liberar memoria
+
 
 
 # Rutinas VM
