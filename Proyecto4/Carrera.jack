@@ -53,13 +53,13 @@ class Carrera {
         let index = 0;
         while (index < cantidadObstaculos) {
             do obstaculos[index].dispose();
-            let i = i + 1;
+            let index = index + 1;
         }
 
         let i = 0;
         while (index < 4) {
             do tiposObstaculos[i].dispose();
-            let i = i + 1;
+            let index = index + 1;
         }
 
         do Memory.deAlloc(obstaculos);
@@ -194,6 +194,8 @@ class Carrera {
     /*  Funciones Helper    */
 
     method void eliminarFuera() {
+        var int i;
+        var Obstaculo o;
 
     }
 
