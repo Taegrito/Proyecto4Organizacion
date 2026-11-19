@@ -48,6 +48,7 @@ Los controles del juego son los siguientes:
 | 1 | Seleccionar carrera de 50 pasos |
 | 2 | Seleccionar carrera de 100 pasos |
 | 3 | Seleccionar carrera de 150 pasos |
+
 El movimiento del carro se realiza entre tres carriles. Durante la partida, las entradas del teclado se consultan sin detener el ciclo del juego.
 
 # Diseño de clases
