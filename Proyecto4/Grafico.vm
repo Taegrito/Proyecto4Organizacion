@@ -20,7 +20,8 @@ function Grafico.dibujarCelda 1
 
 label FILA // (fila * 512)
     push argument 0
-    not
+    push constant 0
+    eq
     if-goto FIN_FILA
     push pointer 1
     push constant 512

@@ -97,7 +97,7 @@ class Carrera {
 
     /** Un paso del juego, en el orden de la seccion 8.3. */
     method void avanzar() {
-        if (estado = 0) {return;}
+        if (~(estado = 0)) {return;}
         
         do aplicarCambioCarril();
         do moverObstaculos();
