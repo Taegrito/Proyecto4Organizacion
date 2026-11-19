@@ -1,5 +1,7 @@
 **Organización de computadores**
+
 **Proyecto 4 - Programación**
+
 **2026-2**
 
 # Integrantes
