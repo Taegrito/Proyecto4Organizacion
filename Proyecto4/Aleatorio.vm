@@ -1,0 +1,29 @@
+// Aleatorio.vm - Genera numeros pseudoaleatorios de 16-bits
+// Autor: Juan Pablo López
+
+// semilla(s)
+//  argument 0 = semilla s - valor con el cual va a ser inicializado la semilla (s)
+function Aleatorio.semilla 0
+    push argument 0
+    pop static 0
+    push constant 0
+    return
+
+// siguiente()
+//  Toma la semilla actual, ma multiplica por 5 y le suma 3 al resultado.
+//  return - nuevo valor de la semilla (x)
+function Aleatorio.siguiente 0
+    push static 0
+    push static 0
+    add
+    push static 0
+    add
+    push static 0
+    add
+    push static 0
+    add
+    push constant 3
+    add
+    pop static 0
+    push static 0
+    return

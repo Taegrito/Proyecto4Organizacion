@@ -1,0 +1,231 @@
+/*********
+* Carrera.jack - Logica del juego de carriles (seccion 8 del enunciado).
+* No puede usar Screen, Output, Keyboard, Grafico ni Sys.wait, ni
+* directamente ni a traves de las clases que use.
+* Autor: Juan Pablo López
+*********/
+class Carrera {
+    field int meta;
+    field int semillaActual;
+    field int estado;
+    field int vidas;
+    field int puntaje;
+    field int progreso;
+    field int carrilCarro;
+    field int dirSolicitada;
+
+    field Array obstaculos;
+    field int cantidadObstaculos;
+
+    field Array tiposObstaculos;
+
+    /** Nueva carrera: carro en el carril 1, 3 vidas, puntaje 0, progreso 0,
+        estado 0 y sin obstaculos. semilla inicializa el generador. */
+    constructor Carrera new(int pasosMeta, int semilla) {
+        let meta = pasosMeta;
+        let semillaActual = semilla;
+        let estado = 0;
+        let dirSolicitada = 0;
+
+        let carrilCarro = 1;
+        let vidas = 3;
+        let puntaje = 0;
+        let progreso = 0;
+
+        let obstaculos = Array.new(20);
+        let cantidadObstaculos = 0;
+
+        let tiposObstaculos = Array.new(4);
+        var int i;
+        let i = 0;
+        while (i < 4) {
+            let tiposObstaculos[i] = TipoObstaculo.new(i);
+            let i = i + 1;
+        }
+
+        do Aleatorio.semilla(semilla);
+        return this;
+    }
+
+    /** Libera los obstaculos, los objetos internos y la carrera. */
+    method void dispose() {
+        var int index;
+        let index = 0;
+        while (index < cantidadObstaculos) {
+            do obstaculos[index].dispose();
+            let i = i + 1;
+        }
+
+        let i = 0;
+        while (index < 4) {
+            do tiposObstaculos[i].dispose();
+            let i = i + 1;
+        }
+
+        do Memory.deAlloc(obstaculos);
+        do Memory.deAlloc(tiposObstaculos);
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    /** Solicita un cambio de carril: -1 sube, 1 baja (seccion 8.3). */
+    method void moverCarro(int dir) {
+        if (estado = 0) {
+            if ((dir = -1) | (dir = 1)) {
+                let dirSolicitada = dir;
+            }
+        }
+        return;
+    }
+
+    /** Agrega un obstaculo del tipo dado con su celda izquierda en col. */
+    method void agregarObstaculo(int tipo, int carril, int col) {
+        if ((cantidadObstaculos < 20) & TipoObstaculo.tipoValido(tipo)) {
+            if ((carril > -1) & (carril < 3)) {
+                if ((col > -1) & (col < 32)) {
+                    let obstaculos[cantidadObstaculos] = Obstaculo.new(tiposObstaculos[tipo], carril, col);
+                    let cantidadObstaculos = cantidadObstaculos + 1;
+                }
+            }
+        }
+        return;
+    }
+
+    /** Un paso del juego, en el orden de la seccion 8.3. */
+    method void avanzar() {
+        do aplicarCambioCarril();
+        do moverObstaculos();
+        do resolverChoques();
+
+        if (estado = 1) {
+            return;
+        }
+
+        do eliminarFuera();
+
+        let progreso = progreso + 1;
+        let puntaje = puntaje + 1;
+
+        if (progreso = meta) {
+            let estado = 2;
+        }
+
+        return;
+    }
+
+    /** Agrega a lo sumo un obstaculo en la columna 31 (seccion 8.4). */
+    method void generar() {
+        var int x, lane, type;
+        var TipoObstaculo tipoRef;
+        if ((estado ~= 0) | (cantidadObstaculos >= 20)) {
+            return;
+        }
+        let x = Aleatorio.siguiente();
+        if (x < 0) {
+            return;
+        }
+        let lane = buscarCarrilLibre(mod(x / 8, 3));
+        if (lane < 0) {
+            return;
+        }
+        let x = Aleatorio.siguiente();
+        let type = mod(x / 8, 4);
+        let tipoRef = tiposObstaculos[type];
+        if (tipoRef.letal()) {
+            if (~pasoLibreOk(lane)) {
+                let type = 3;
+            }
+        }
+        do agregarObstaculo(type, lane, 31);
+        return;
+    }
+
+    /** Carril del carro: 0, 1 o 2. */
+    method int carrilCarro() {
+        return carrilCarro;
+    }
+
+    /** Tipo del obstaculo que ocupa (carril, col), o -1 si esta libre. */
+    method int ocupada(int carril, int col) {
+        var int i;
+        var int t;
+        if ((col < 0) | (col > 31)) {
+            return -1;
+        }
+        let i = 0;
+
+        while (i < cantidadObstaculos) {
+            if (obstaculos[i].carril() = carril) {
+                if (obstaculos[i].ocupa(col)) {
+                    let t = obstaculos[i].tipo();
+                    return t;
+                }
+            }
+            let i = i + 1;
+        }
+
+        return -1;
+    }
+
+    method int vidas() {
+        return vidas;
+    }
+
+    method int puntaje() {
+        return puntaje;
+    }
+
+    method int progreso() {
+        return progreso;
+    }
+
+    /** 0 jugando, 1 derrota, 2 victoria. */
+    method int estado() {
+        return estado;
+    }
+
+    /** Cantidad de obstaculos activos. */
+    method int cantidad() {
+        return cantidadObstaculos;
+    }
+
+
+
+    /*  Funciones Helper    */
+
+    method void eliminarFuera() {
+
+    }
+
+    method void resolverChoques() {
+
+    }
+
+    method void removerEn(int i) {
+
+    }
+
+    method void moverObstaculos() {
+
+    }
+
+    method void aplicarCambioCarril() {
+        
+    }
+
+    method int buscarCarrilLibre(int c) {
+
+    }
+
+    method boolean pasoLibreOk(int c) {
+
+    }
+
+    method boolean letalEnRango(int c) {
+
+    }
+
+    method int mod(int x, int n) {
+
+    }
+}

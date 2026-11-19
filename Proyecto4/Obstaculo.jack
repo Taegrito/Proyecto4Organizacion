@@ -1,0 +1,70 @@
+/*
+* Obstaculo.jack - Describe una instancia de un obstaculo, ya sea un
+* cono, un camion, una moto o una moneda. Tiene la informacion del
+* tipo de obstaculo, el carril, columna, y la columna anterior.
+* No tiene posición, dibujo o logica del juego.
+* Autor: Juan Pablo López
+*/
+class Obstaculo {
+    field TipoObstaculo tipoRef;
+    field int valorCarril;
+    field int valorCol;
+    field int valorColAnterior;
+
+    constructor Obstaculo new(TipoObstaculo tipo, int carril, int col) {
+        let tipoRef = tipo;
+        let valorCarril = carril;
+        let valorCol = col;
+        let valorColAnterior = col;
+        return this;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void avanzar() {
+        let valorColAnterior = valorCol;
+        let valorCol = valorCol - tipoRef.velocidad();
+        return;
+    }
+
+    method boolean tocaCarro() {
+        var int limiteDer;
+
+        let limiteDer = valorColAnterior + tipoRef.largo() - 1;
+        return (~(valorCol > 2) & ~(limiteDer < 2));
+    }
+
+    method boolean salioCompletamente() {
+        return ((valorCol + tipoRef.largo() - 1) < 0);
+    }
+
+    method boolean ocupa(int c) {
+        var int limiteDer;
+
+        let limiteDer = valorCol + tipoRef.largo() - 1;
+        return (~(c < valorCol) & ~(c > limiteDer));
+    }
+
+    method int carril() {
+        return valorCarril;
+    }
+
+    method int col() {
+        return valorCol;
+    }
+
+    method int tipo() {
+        return tipoRef.tipo();
+    }
+
+    method boolean letal() {
+        return tipoRef.letal();
+    }
+
+    method int puntos() {
+        return tipoRef.puntos();
+    }
+}

@@ -1,0 +1,77 @@
+/*
+* TipoObstaculo.jack - Describe un tipo de obstaculo, ya sea un
+* cono, un camion, una moto o una moneda. Tiene la informacion de
+* largo, velocidad letalidad y puntos.
+* No tiene posición, dibujo o logica del juego.
+* Autor: Juan Pablo López
+*/
+class TipoObstaculo {
+    field int tipoId;           // id (0 a 3) del tipo
+    field int valorLargo;       // celdas que ocupa (1 o 3)
+    field int valorVelocidad;   // celdas por paso (1 o 2)
+    field int valorPuntos;      // si quita la vida al tocar (true)
+    field boolean esLetal;      // puntos al tocar
+
+    /**
+    * Constructor de Tipo Obstaculo, dependiendo del tipo se asignan valores a los atributos.
+    */
+    constructor TipoObstaculo new(int tipo) {
+        let tipoId = tipo;
+
+        if (tipo = 0) { // Cono
+            let valorLargo = 1;
+            let valorVelocidad = 1;
+            let valorPuntos = 0;
+            let esLetal = true;
+        }
+        if (tipo = 1) { // Camión
+            let valorLargo = 3;
+            let valorVelocidad = 1;
+            let valorPuntos = 0;
+            let esLetal = true;
+        }
+        if (tipo = 2) { // Moto
+            let valorLargo = 1;
+            let valorVelocidad = 2;
+            let valorPuntos = 0;
+            let esLetal = true;
+        }
+        if (tipo = 3) { // moneda
+            let valorLargo = 1;
+            let valorVelocidad = 1;
+            let valorPuntos = 10;
+            let esLetal = false;
+        }
+
+        return this;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    function boolean tipoValido(int tipo) {
+        return ((tipo > -1) & (tipo < 4));
+    }
+
+    method int tipo() {
+        return tipoId;
+    }
+
+    method int largo() {
+        return valorLargo;
+    }
+
+    method int velocidad() {
+        return valorVelocidad;
+    }
+
+    method int puntos() {
+        return valorPuntos;
+    }
+
+    method boolean letal() {
+        return esLetal;
+    }
+}
