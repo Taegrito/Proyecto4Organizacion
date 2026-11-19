@@ -2,10 +2,69 @@
 // Autor: Juan Pablo López
 
 // dibujarCelda(fila, col, sprite)
-//  argument 0 = fila (0..15), argument 1 = col (0..31),
+//  argument 0 = fila (0..15),
+//  argument 1 = col (0..31),
 //  argument 2 = direccion del Array de 16 palabras del sprite.
+//
 //  Linea k de la celda: RAM[16384 + fila*512 + k*32 + col] = sprite[k].
-function Grafico.dibujarCelda 0
-    // COMPLETAR
+
+// This = Sprite
+// That = Pantalla
+
+function Grafico.dibujarCelda 1
+    // THAT = 16384 + col (fila*512)
+    push constant 16384
+    push argument 1 // col
+    add
+    pop pointer 1 // base
+
+label FILA // (fila * 512)
+    push argument 0
+    not
+    if-goto FIN_FILA
+    push pointer 1
+    push constant 512
+    add
+    pop pointer 1
+    push argument 0
+    push constant 1
+    sub
+    pop argument 0
+    goto FILA
+label FIN_FILA
+
+    // THIS = sprite
+    push argument 2
+    pop pointer 0
+
+    // local 0 = base + 512
+    push pointer 1
+    push constant 512
+    add
+    pop local 0
+    
+label CELDA // Copamos la celda
+    // *THAT = *THIS
+    push this 0
+    pop that 0
+
+    // THIS++
+    push pointer 0
+    push constant 1
+    add
+    pop pointer 0
+
+    // THAT = THAT + 32
+    push pointer 1
+    push constant 32
+    add
+    pop pointer 1
+
+    // Loop Check
+    push pointer 1
+    push local 0
+    sub
+    if-goto CELDA
+
     push constant 0
     return

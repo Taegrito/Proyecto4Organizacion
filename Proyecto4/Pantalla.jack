@@ -17,6 +17,10 @@ class Pantalla{
     field Array spriteCamionCentro;
     field Array spriteCamionDer;
 
+    /*  TEXTOS  */
+    
+
+
     /*
     Inicializa la pantalla y todos sus atributos, establece sus valores y crea los sprites para dibujar los elementos
     */
