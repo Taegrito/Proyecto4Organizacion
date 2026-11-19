@@ -18,8 +18,31 @@ class Pantalla{
     field Array spriteCamionDer;
 
     /*  TEXTOS  */
-    
-
+    // Inicio
+    field String titulo;                        //"Carreras Jack"
+    field String tituloSeleccionDistancia;      //"Selecciona la distancia"
+    field String opcionDistancia1;              //"1-50 pasos"
+    field String opcionDistancia2;              //"2-100 pasos"
+    field String opcionDistancia3;              //"3-150 pasos"
+    field String instruccionSeleccionDistancia; //"Presiona 1,2 o 3 para iniciar"
+    field String instruccionSalir;              //"ESC-Salir"
+    // Pausa
+    field String tituloPausa;           //"JUEGO PAUSADO"
+    field String instruccionConitnuar;  //"Presiona P para continuar"
+    field String instruccionReiniciar;  //"Presiona R para reiniciar"
+    field String instruccionSalir2;     //"Presiona ESC para salir"
+    // Juego
+    field String tituloVidas;               //"VIDAS: "
+    field String tituloPuntos;              //"PUNTOS: "
+    field String tituloProgreso;            //"PROGRESO: "
+    field String instruccionesMover;        //"Flechas: mover  P: Pausa"
+    field String instruccionesReiniciar;    //"R: Reiniciar  ESC: Salir"
+    // Resultado
+    field String tituloGanar;       //"Has ganado!"
+    field String tituloPerder;      //"Has perdido!"
+    field String tituloPuntosMin;   //"Puntos: "
+    field String instruccionMenu;   //"R - Menu principal"
+    field String instruccionSalir;  //"ESC - Salir"
 
     /*
     Inicializa la pantalla y todos sus atributos, establece sus valores y crea los sprites para dibujar los elementos
@@ -37,6 +60,33 @@ class Pantalla{
         let spriteCamionDer = crearSpriteCamionDer();
         let spriteMoto = crearSpriteMoto();
         let spriteMoneda = crearSpriteMoneda();
+
+        // Definimos todos los textos
+        // Inicio
+        let titulo = "Carreras Jack";
+        let tituloSeleccionDistancia = "Selecciona la distancia";
+        let opcionDistancia1 = "1-50 pasos";
+        let opcionDistancia2 = "2-100 pasos";
+        let opcionDistancia3 = "3-150 pasos";
+        let instruccionSeleccionDistancia = "Presiona 1,2 o 3 para iniciar";
+        let instruccionSalir = "ESC-Salir";
+        // Pausa
+        let tituloPausa = "JUEGO PAUSADO";
+        let instruccionConitnuar = "Presiona P para continuar";
+        let instruccionReiniciar = "Presiona R para reiniciar";
+        let instruccionSalir2 = "Presiona ESC para salir";
+        // Juego
+        let tituloVidas = "VIDAS: ";
+        let tituloPuntos = "PUNTOS: ";
+        let tituloProgreso = "PROGRESO: ";
+        let instruccionesMover = "Flechas: mover  P: Pausa";
+        let instruccionesReiniciar = "R: Reiniciar  ESC: Salir";
+        // Resultado
+        let tituloGanar = "Has ganado!";
+        let tituloPerder = "Has perdido!";
+        let tituloPuntosMin = "Puntos: ";
+        let instruccionMenu = "R - Menu principal";
+        let instruccionSalir = "ESC - Salir";
         
         return this;
     }
@@ -255,19 +305,19 @@ class Pantalla{
 
         do Screen.clearScreen();
         do Output.moveCursor(2,20);
-        do Output.printString("Carreras Jack");
+        do Output.printString(titulo);
         do Output.moveCursor(6,15);
-        do Output.printString("Selecciona la distancia");
+        do Output.printString(tituloSeleccionDistancia);
         do Output.moveCursor(9,20);
-        do Output.printString("1-50 pasos");
+        do Output.printString(opcionDistancia1);
         do Output.moveCursor(11, 20);
-        do Output.printString("2-100 pasos");
+        do Output.printString(opcionDistancia2);
         do Output.moveCursor(13,20);
-        do Output.printString("3-150 pasos");
+        do Output.printString(opcionDistancia3);
         do Output.moveCursor(17,15);
-        do Output.printString("Presiona 1,2 o 3 para iniciar");
+        do Output.printString(instruccionSeleccionDistancia);
         do Output.moveCursor(19,20);
-        do Output.printString("ESC-Salir");
+        do Output.printString(instruccionSalir);
 
         while (~elegido) {
             let tecla = Keyboard.keyPressed();
@@ -521,16 +571,16 @@ class Pantalla{
         do Screen.clearScreen();
 
         do Output.moveCursor(8, 23);
-        do Output.printString("JUEGO PAUSADO");
+        do Output.printString(tituloPausa);
 
         do Output.moveCursor(11, 15);
-        do Output.printString("Presiona P para continuar");
+        do Output.printString(instruccionConitnuar);
 
         do Output.moveCursor(14, 20);
-        do Output.printString("Presiona R para reiniciar");
+        do Output.printString(instruccionReiniciar);
 
         do Output.moveCursor(16, 20);
-        do Output.printString("Presiona ESC para salir");
+        do Output.printString(instruccionSalir2);
 
         return;
     }
@@ -542,15 +592,15 @@ class Pantalla{
         do Screen.clearScreen();
 
         do Output.moveCursor(0, 2);
-        do Output.printString("VIDAS: ");
+        do Output.printString(tituloVidas);
         do Output.printInt(carrera.vidas());
 
         do Output.moveCursor(0, 23);
-        do Output.printString("PUNTOS: ");
+        do Output.printString(tituloPuntos);
         do Output.printInt(carrera.puntaje());
 
         do Output.moveCursor(2, 2);
-        do Output.printString("PROGRESO: ");
+        do Output.printString(tituloProgreso);
         do Output.printInt(carrera.progreso());
 
         do dibujarProgreso(carrera);
@@ -567,9 +617,9 @@ class Pantalla{
         do Screen.setColor(false);
 
         do Output.moveCursor(20, 2);
-        do Output.printString("Flechas: mover  P: Pausa");
+        do Output.printString(instruccionesMover);
         do Output.moveCursor(21, 2);
-        do Output.printString("R: Reiniciar  ESC: Salir");
+        do Output.printString(instruccionesReiniciar);
 
         return;
     }
@@ -584,20 +634,20 @@ class Pantalla{
 
         if (victoria) {
             do Output.moveCursor(7, 20);
-            do Output.printString("Has ganado!");
+            do Output.printString(tituloGanar);
         } else {
             do Output.moveCursor(7, 20);
-            do Output.printString("Has perdido!");
+            do Output.printString(tituloPerder);
         }
 
         do Output.moveCursor(9, 20);
-        do Output.printString("Puntos: ");
+        do Output.printString(tituloPuntosMin);
         do Output.printInt(puntos);
 
         do Output.moveCursor(14, 12);
-        do Output.printString("R - Menu principal");
+        do Output.printString(instruccionMenu);
         do Output.moveCursor(16, 12);
-        do Output.printString("ESC - Salir");
+        do Output.printString(instruccionSalir);
 
         let tecla = Keyboard.keyPressed();
 
@@ -632,6 +682,28 @@ class Pantalla{
         do Memory.deAlloc(spriteCamionDer);
         do Memory.deAlloc(spriteMoto);
         do Memory.deAlloc(spriteMoneda);
+
+        do Memory.deAlloc(titulo);
+        do Memory.deAlloc(tituloSeleccionDistancia);
+        do Memory.deAlloc(opcionDistancia1);
+        do Memory.deAlloc(opcionDistancia2);
+        do Memory.deAlloc(opcionDistancia3);
+        do Memory.deAlloc(instruccionSeleccionDistancia);
+        do Memory.deAlloc(instruccionSalir);
+        do Memory.deAlloc(tituloPausa);
+        do Memory.deAlloc(instruccionConitnuar);
+        do Memory.deAlloc(instruccionReiniciar);
+        do Memory.deAlloc(instruccionSalir2);
+        do Memory.deAlloc(tituloVidas);
+        do Memory.deAlloc(tituloPuntos);
+        do Memory.deAlloc(tituloProgreso);
+        do Memory.deAlloc(instruccionesMover);
+        do Memory.deAlloc(instruccionesReiniciar);
+        do Memory.deAlloc(tituloGanar);
+        do Memory.deAlloc(tituloPerder);
+        do Memory.deAlloc(tituloPuntosMin);
+        do Memory.deAlloc(instruccionMenu);
+        do Memory.deAlloc(instruccionSalir);
 
         do Memory.deAlloc(this);
         return;
