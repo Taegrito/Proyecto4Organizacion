@@ -83,7 +83,7 @@ Solo tiene 2 funciones.
 
 ## Grafico.vm (por implementar)
 Solo esta compuesto de una funcion.
-* `dibujarCelda(int, int, array)`: imprime en la pantalla un sprite en una celda (de 16x16 pixeles) de una malla que divide a la pantalla 16*32 durante el juego.
+* `dibujarCelda(int, int, array)`: imprime en la pantalla un sprite en una celda (de 16x16 pixeles) de una malla que divide a la pantalla 16x32 durante el juego.
 
 # Uso de IA
 Se utilizó ChatGpt, Claude y DeepSeek v4.1 flash como apopyo durante el desarrollo del proceso, a través de la correción de errores que se presentaron en el código. No se usó LLMs para generar ninguna parte del codigo, solo de manera conceptual o para aclarar dudas tecnicas, y todas las correcciones fueron implementadas a mano por los integrantes.
